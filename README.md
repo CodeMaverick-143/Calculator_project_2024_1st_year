@@ -11,27 +11,3 @@ Technologies Used
 HTML for structure
 CSS for styling and responsive design
 JavaScript for handling calculations and interactions
-Getting Started
-Installation
-Clone the repository:
-bash
-Copy code
-git clone https://github.com/yourusername/calculator-web-app.git
-Open index.html in your web browser to start using the calculator.
-Usage
-Click buttons on the calculator to input numbers and operators.
-Press = to get the result of the calculation.
-Use C to clear the display and start a new calculation.
-Project Structure
-plaintext
-calculator-web-app/
-├── index.html       # Main HTML file
-├── style.css        # CSS file for styling
-└── script.js        # JavaScript file for functionality
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Future Improvements
-Add keyboard support for number and operator inputs.
-Include additional mathematical functions, such as square root or exponentiation.
-Improve error handling and edge case coverage.
