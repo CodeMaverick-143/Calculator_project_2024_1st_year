@@ -12,6 +12,8 @@ function calculate(a, b, operator) {
         case '-': return a - b;
         case '*': return a * b;
         case '/': return b !== 0 ? a / b : 'Error';
+        case '%': return a % b;
+        case '^': return Math.pow(a, b);
         default: return b;
     }
 }
@@ -19,7 +21,7 @@ function calculate(a, b, operator) {
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         const value = button.textContent;
-        
+
         if (!isNaN(value) || value === '.') {
             currentInput += value;
             display.value = currentInput;
@@ -35,6 +37,9 @@ buttons.forEach(button => {
                 previousInput = '';
                 operator = '';
             }
+        } else if (value === '±') {
+            currentInput = currentInput ? (-parseFloat(currentInput)).toString() : '';
+            display.value = currentInput;
         } else {
             if (currentInput) {
                 if (previousInput) {
