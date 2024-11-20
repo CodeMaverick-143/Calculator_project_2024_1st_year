@@ -1,101 +1,114 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: radial-gradient(circle, #0f0f0f, #1b1b1b, #2e2e2e);
-    overflow: hidden;
-}
+const mainDisplay = document.getElementById('main-display');
+const secondaryDisplay = document.getElementById('secondary-display');
+const buttons = document.querySelectorAll('.button');
+let currentInput = '';
+let secondaryInput = '';
+let operator = '';
+let resultCalculated = false;
+let history = []; // Array to store history
 
-.calculator {
-    background: linear-gradient(145deg, #1a1a1a, #2b2b2b);
-    border-radius: 25px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 5px 15px rgba(255, 255, 255, 0.1);
-    width: 100%;
-    max-width: 500px;
-    animation: slideIn 1s ease-out;
-}
-
-.display-container {
-    margin-bottom: 20px;
-    background: linear-gradient(145deg, #232323, #2d2d2d);
-    border-radius: 15px;
-    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-}
-
-.display {
-    width: 100%;
-    height: 50px;
-    background: none;
-    border: none;
-    border-radius: 15px;
-    color: #00f9ff;
-    font-size: 2rem;
-    padding: 10px 15px;
-    text-align: right;
-    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.1);
-}
-
-.secondary-display {
-    width: 100%;
-    height: 20px;
-    background: none;
-    border: none;
-    color: #aaaaaa;
-    font-size: 1rem;
-    text-align: right;
-}
-
-.button {
-    background: linear-gradient(145deg, #3b3b3b, #4e4e4e);
-    border: none;
-    border-radius: 15px;
-    color: white;
-    font-size: 1.2rem;
-    padding: 20px;
-    margin: 5px;
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
-    background: linear-gradient(145deg, #3b3b3b, #575757);
-}
-
-.button:hover {
-    transform: scale(1.1);
-    background: linear-gradient(145deg, #575757, #717171);
-    color: #00f9ff;
-    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.8);
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.operator {
-    background: linear-gradient(145deg, #ff0080, #ff4d94);
-    box-shadow: 0 5px 15px rgba(255, 0, 128, 0.6);
-}
-
-.equal {
-    background: linear-gradient(145deg, #00bcd4, #0099ff);
-    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.6);
-}
-
-@media (max-width: 600px) {
-    .button {
-        font-size: 1rem;
-        padding: 12px;
-    }
-
-    .display {
-        font-size: 1.6rem;
+function calculateExpression(expression) {
+    try {
+        // Replace operators for eval function
+        return eval(expression.replace('×', '*').replace('÷', '/').replace('^', '**'));
+    } catch {
+        return 'Error';
     }
 }
+
+function updateHistory(expression, result) {
+    history.push(`${expression} = ${result}`);
+    // Optionally, you can limit history length
+    if (history.length > 10) history.shift(); // Keep last 10 entries
+}
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.textContent;
+
+        if (!isNaN(value) || value === '.') {
+            if (resultCalculated) {
+                currentInput = value;
+                resultCalculated = false;
+            } else {
+                currentInput += value;
+            }
+            mainDisplay.value = currentInput;
+        } else if (value === 'C') {
+            currentInput = '';
+            secondaryInput = '';
+            operator = '';
+            mainDisplay.value = '';
+            secondaryDisplay.value = '';
+        } else if (value === '±') {
+            currentInput = currentInput ? (-parseFloat(currentInput)).toString() : '';
+            mainDisplay.value = currentInput;
+        } else if (value === 'π') {
+            currentInput = Math.PI.toString();
+            mainDisplay.value = currentInput;
+        } else if (value === '√') { // Square root
+            if (currentInput) {
+                currentInput = Math.sqrt(parseFloat(currentInput)).toString();
+                mainDisplay.value = currentInput;
+            }
+        } else if (value === '=') {
+            if (currentInput && secondaryInput) {
+                // Concatenate current input to secondary input
+                secondaryInput += currentInput;
+                const result = calculateExpression(secondaryInput);
+                mainDisplay.value = result; // Display result in main display
+                updateHistory(secondaryInput, result); // Update history
+                secondaryDisplay.value = `${secondaryInput} = ${result}`; // Show last calculation
+                // Reset for next calculation
+                currentInput = ''; // Clear current input
+                secondaryInput = ''; // Clear secondary input for new expression
+                operator = ''; // Reset operator
+                resultCalculated = true; // Indicate that a result has been calculated
+            }
+        } else if (['+', '−', '×', '÷', '^'].includes(value)) {
+            if (currentInput) {
+                if (resultCalculated) {
+                    secondaryInput = currentInput + value; // Start a new expression
+                    resultCalculated = false;
+                } else {
+                    secondaryInput += currentInput + value; // Append to existing expression
+                }
+                secondaryDisplay.value = secondaryInput.replace('×', '*').replace('÷', '/');
+                currentInput = ''; // Clear current input
+                mainDisplay.value = ''; // Clear main display
+            }
+        } else if (['sin', 'cos', 'tan', 'log', 'exp'].includes(value)) {
+            if (currentInput) {
+                let computedValue;
+                switch (value) {
+                    case 'sin':
+                        computedValue = Math.sin(parseFloat(currentInput) * Math.PI / 180);
+                        break;
+                    case 'cos':
+                        computedValue = Math.cos(parseFloat(currentInput) * Math.PI / 180);
+                        break;
+                    case 'tan':
+                        computedValue = Math.tan(parseFloat(currentInput) * Math.PI / 180);
+                        break;
+                    case 'log':
+                        computedValue = Math.log10(parseFloat(currentInput));
+                        break;
+                    case 'exp': // Exponential
+                        computedValue = Math.exp(parseFloat(currentInput));
+                        break;
+                }
+                currentInput = computedValue.toString();
+                mainDisplay.value = currentInput;
+            }
+        }
+    });
+});
+
+// Keyboard support
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+    const button = Array.from(buttons).find(btn => btn.textContent === key);
+    if ( button) {
+        button.click();
+    }
+});
