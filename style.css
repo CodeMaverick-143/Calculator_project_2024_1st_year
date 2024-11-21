@@ -1,6 +1,6 @@
 .body_calc{
     margin: auto;
-    background-color: gray;
+    background-color: rgb(111, 132, 104);
     color: white;
     padding:1rem;
     width: 40%;
@@ -8,7 +8,7 @@
     align-items: center;
 }
 .button{
-    color:aliceblue;
+    color:rgb(86, 152, 210);
     background-color: red;
     border:2px;
     display: inline-flex;
@@ -17,11 +17,11 @@
     margin-right: 2px;
     border-radius: 20px;
     font-size:15px;
-    background: linear-gradient(135deg, #d9d9d9, #7f7f7f); 
+    background: linear-gradient(135deg, #d9d9d9, #0a0101); 
     color: black;
 }
 .button:hover{
-    background-color: #0056b3;
+    background-color: #457db8;
 }
 .display {
     width: 94%;
@@ -64,4 +64,13 @@
     display: flex;
     justify-content: space-around; 
     align-items: center;
+}
+
+body {
+    background-image: url(https://img.freepik.com/premium-vector/pi-day-seamless-pattern-with-mathematical-constants-baked-pie-template-hand-drawn-illustration_2175-12164.jpg?semt=ais_hybrid); /* Replace with your image path */
+    background-size: cover; /* Cover the entire body */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    height: 100vh; /* Ensure the body takes the full height of the viewport */
+    margin: 0; /* Remove default margin */
 }
