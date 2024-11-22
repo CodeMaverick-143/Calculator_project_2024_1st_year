@@ -10,4 +10,5 @@ Clear Function: Quickly reset calculations.
 Technologies Used
 HTML for structure
 CSS for styling and responsive design
-JavaScript for handling calculations and interactions
+JavaScript for handling calculations and interactions 
+i add color and background to this calculator
