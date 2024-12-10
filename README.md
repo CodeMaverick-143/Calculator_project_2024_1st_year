@@ -46,6 +46,4 @@ This project is an excellent way to:
 
 Learn about building responsive layouts.
 Implement advanced JavaScript operations.
-Enhance UI/UX skills with modern CSS techniques.
-Understand how to combine HTML, CSS, and JavaScript into a single cohesive application.
-Enjoy exploring and customizing the Calculator Web App! 🎉
+
