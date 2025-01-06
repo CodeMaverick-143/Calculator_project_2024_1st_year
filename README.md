@@ -42,7 +42,7 @@ The calculator adjusts seamlessly to different screen sizes.
 Landscape mode is optimized for a more comprehensive view on larger devices.
 Button sizes and spacing adapt for touch-friendly usability on smaller devices.
 🔥 Why Use This?
-This project is an excellent way to:
+This project is an excellent way to Calculate
 
 Learn about building responsive layouts.
 Implement advanced JavaScript operations.
