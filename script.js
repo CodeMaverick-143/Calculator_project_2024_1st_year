@@ -108,7 +108,7 @@ buttons.forEach(button => {
 document.addEventListener('keydown', (event) => {
     const key = event.key;
     const button = Array.from(buttons).find(btn => btn.textContent === key);
-    if ( button) {
+    if (button) {
         button.click();
     }
 });
