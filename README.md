@@ -45,5 +45,5 @@ Button sizes and spacing adapt for touch-friendly usability on smaller devices.
 This project is an excellent way to Calculate
 
 Learn about building responsive layouts.
-Implement advanced JavaScript operations.
+Implement advanced JavaScript operations.......
 
